@@ -1,8 +1,11 @@
 const router = require('express').Router();
-const createUser = require('./controller/createUser');
+const auth = require('../middleware/auth');
+const create = require('./controller/create');
 const login = require('./controller/login');
+const update = require('./controller/update');
 
-router.post('/', createUser);
+router.post('/', create);
+router.patch('/', auth, update);
 router.post('/login', login);
 
 

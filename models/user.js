@@ -22,6 +22,14 @@ const userSchema = mongoose.Schema({
   timestamps: true
 });
 
+userSchema.pre('save', function (next) {
+  if (this.isNew || this.isModified('password')) {
+    this.password = bcrypt.hashSync(this.password, 8);
+  }
+
+  next();
+});
+
 userSchema.methods.getData = function () {
   return {
     _id: this._id,
