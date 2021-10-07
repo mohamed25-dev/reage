@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const auth = require('../middleware/auth');
+const uploadImage = require('../middleware/uploadImage');
+
 const create = require('../post/controller/create');
 const like = require('../post/controller/like');
 const comment = require('../post/controller/comment');
@@ -8,7 +10,7 @@ const list = require('../post/controller/list');
 
 router.get('/', list);
 router.get('/:id', get);
-router.post('/', auth, create);
+router.post('/', auth, uploadImage, create);
 router.post('/:id/like', auth, like);
 router.post('/:id/comment', auth, comment);
 

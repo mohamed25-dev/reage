@@ -1,14 +1,16 @@
 const Post = require('../../../models/post');
 
 module.exports = async (req, res) => {
-  const errors = await validate(req.body);
+  const errors = await validate(req.body, req.files);
   if (errors.length > 0) {
     return res.status(400).json({ errors });
   }
 
+  const image = 'uploads/' + req.files.image[0].filename;
+
   const post = {
     title: req.body.title,
-    image: req.body.image,
+    image,
     body: req.body.body,
     user: req.user._id
   }
@@ -18,13 +20,13 @@ module.exports = async (req, res) => {
   res.send({ post: createdPost });
 }
 
-const validate = async (post) => {
+const validate = async (post, files) => {
   const errors = [];
   if (!post.title) {
     errors.push('الرجاء إضافة عنوان للصورة');
   }
 
-  if (!post.image) {
+  if (!files.image) {
     errors.push('الرجاء إضافة الصورة');
   }
 
