@@ -1,4 +1,5 @@
 const multer = require('multer');
+const makeError = require('http-errors');
 
 // Multer Config
 const multerStorage = multer.diskStorage({
@@ -7,7 +8,6 @@ const multerStorage = multer.diskStorage({
   },
 
   filename: (req, file, cb) => {
-    let image;
     const ext = file.mimetype.split('/')[1];
 
     cb(null, `image-${new Date().getTime()}-.${ext}`);
@@ -18,7 +18,7 @@ const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image')) {
     cb(null, true);
   } else {
-    cb(new ErrorHandler(400, 'رجاء رفع الصور فقط'), false);
+    cb(makeError(400, 'رجاء رفع الصور فقط'), false);
   }
 };
 
