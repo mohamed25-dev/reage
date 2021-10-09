@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function TextInput({ name, label, onChange, variant = 'filled', ...props }) {
+export default function TextInput({ name, label, onChange, variant, ...props }) {
   const classes = useStyles();
   const { formatMessage } = useIntl();
 

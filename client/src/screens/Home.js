@@ -1,6 +1,10 @@
-import { Button, makeStyles, Box, Container, Paper } from '@material-ui/core';
+import { useState } from 'react';
+import { makeStyles, Box, CircularProgress, Grid } from '@material-ui/core';
+import axios from 'axios';
 import { FormattedMessage } from 'react-intl';
 import { MainLayout } from '../layouts'
+import { useEffect } from 'react';
+import { Post } from '../components';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -31,12 +35,44 @@ const useStyles = makeStyles((theme) => {
   }
 });
 
-export default function Login() {
-  const classes = useStyles();
+export default function Home() {
+  const [loading, setLoading] = useState(false);
+  const [posts, setPosts] = useState([]);
 
-  return (
-    <MainLayout>
-     
-    </MainLayout>
-  )
+  useEffect(() => {
+    init();
+  }, []);
+
+  useEffect(() => {
+  }, [loading]);
+
+  const init = async () => {
+    try {
+      setLoading(true);
+      const result = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/posts`);
+      console.log(result.data);
+      setPosts(result.data.posts)
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+  const render = loading
+    ? <CircularProgress />
+    : (
+      <MainLayout title='Home Page'>
+        <Grid container spacing={2}>
+          {
+            posts.map(p => (
+              <Grid item xs={4} key={p.img}>
+                <Post title={p.title} image={p.image} body={p.body} />
+              </Grid>
+            ))
+          }
+        </Grid>
+      </MainLayout>
+    )
+
+  return render;
 }
