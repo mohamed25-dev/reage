@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => {
     continer: {
       flexGrow: 1,
       display: 'flex',
+      background:'#f0f0f0'
     },
     backdrop: {
       zIndex: theme.zIndex.drawer + 1,
@@ -28,6 +29,8 @@ const useStyles = makeStyles((theme) => {
     content: {
       flexGrow: 1,
       borderBottom: 'none',
+      background: '#f3f3f3'
+
     }
   }
 });

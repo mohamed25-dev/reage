@@ -4,6 +4,7 @@ import {
   Menu,
   MenuItem,
   Link,
+  Box
 } from '@material-ui/core';
 import IconButton from '@mui/material/IconButton';
 import AppBar from '@mui/material/AppBar';
@@ -31,11 +32,12 @@ export default function Header() {
   const user = Auth.getUser();
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ background: 'white' }}>
       <Toolbar>
         <Typography variant="h6" component="div" className={classes.title}>
           <FormattedMessage id='app.name' />
         </Typography>
+
         {
           user ? <UserMenu user={user} logout={Auth.logout} /> : <GuestMenu />
         }
@@ -64,42 +66,49 @@ function UserMenu({ user, logout }) {
   }
 
   return (
-    <div>
-      {user?.name}
-      <IconButton
-        aria-label="account of current user"
-        aria-controls="menu-appbar"
-        aria-haspopup="true"
-        onClick={handleMenu}
-        color="inherit"
-      >
-        <Avatar>{user.name?.charAt(0)}</Avatar>
-      </IconButton>
-      <Menu
-        id="menu-appbar"
-        anchorEl={menu}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        keepMounted
-        open={Boolean(menu)}
-        onClose={handleClose}
-      >
-        <Link href='/profile' passHref>
-          <MenuItem>
-            <FormattedMessage id='header.profile' />
+    <>
+      <Button variant="outlined" component="span" color='secondary'>
+        Upload
+      </Button>
+      
+      <Box sx={{ flexGrow: 1 }} />
+      <div>
+        {user?.name}
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleMenu}
+          color="inherit"
+        >
+          <Avatar>{user.name?.charAt(0)}</Avatar>
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={menu}
+          getContentAnchorEl={null}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          open={Boolean(menu)}
+          onClose={handleClose}
+        >
+          <Link href='/profile'>
+            <MenuItem>
+              <FormattedMessage id='header.profile' />
+            </MenuItem>
+          </Link>
+          <MenuItem onClick={handleLogout}>
+            <FormattedMessage id='header.logout' />
           </MenuItem>
-        </Link>
-        <MenuItem onClick={handleLogout}>
-          <FormattedMessage id='header.logout' />
-        </MenuItem>
-      </Menu>
-    </div>
+        </Menu>
+      </div>
+    </>
   )
 }
