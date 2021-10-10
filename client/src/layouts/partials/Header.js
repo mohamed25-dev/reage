@@ -67,7 +67,7 @@ function UserMenu({ user, logout }) {
 
   return (
     <>
-      <Button variant="outlined" component="span" color='secondary'>
+      <Button variant="outlined" color='secondary' href='/upload'>
         Upload
       </Button>
       
