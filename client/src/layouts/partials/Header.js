@@ -99,6 +99,11 @@ function UserMenu({ user, logout }) {
           open={Boolean(menu)}
           onClose={handleClose}
         >
+          <Link href='/me'>
+            <MenuItem>
+              <FormattedMessage id='title.myPosts' />
+            </MenuItem>
+          </Link>
           <Link href='/profile'>
             <MenuItem>
               <FormattedMessage id='header.profile' />

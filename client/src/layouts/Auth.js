@@ -25,8 +25,7 @@ export default function Auth({ children, width = 'xs' }) {
     <Container component="main" maxWidth={width}>
       <CssBaseline />
       <Paper className={classes.paper}>
-
-
+        
         {children}
 
         <Box mt={5}>

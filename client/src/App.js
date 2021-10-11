@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import Auth from './Auth';
 import AppRoute from './AppRoute';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import { Login, Home, Register, Profile, UploadImage } from './screens';
+import { Login, Home, Register, Profile, UploadImage, MyPosts} from './screens';
 
 function App() {
 
@@ -16,7 +16,8 @@ function App() {
       <div className="App">
         <Switch>
           <AppRoute exact path="/" component={Home} />
-          <AppRoute exact path="/upload" component={UploadImage} can={Auth.auth} redirect='/' />
+          <AppRoute exact path="/upload" component={UploadImage} can={Auth.auth} redirect='/login' />
+          <AppRoute exact path="/me" component={MyPosts} can={Auth.auth} redirect='/login' />
           <AppRoute exact path="/login" component={Login} can={Auth.guest} redirect='/'/>
           <AppRoute exact path="/register" component={Register} can={Auth.guest} redirect='/'/>
           <AppRoute exact path="/profile" component={Profile} can={Auth.auth} redirect='/login' />
