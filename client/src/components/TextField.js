@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function TextInput({ name, label, onChange, ...props }) {
+export default function TextInput({ name, label, onChange, value, ...props }) {
   const classes = useStyles();
   const { formatMessage } = useIntl();
 
@@ -23,6 +23,7 @@ export default function TextInput({ name, label, onChange, ...props }) {
           id: label,
           defaultMessage: label
         })}
+        value={value}
         onChange={e => onChange(e.target.value)}
         {...props}
       />

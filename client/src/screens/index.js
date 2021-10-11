@@ -4,6 +4,8 @@ import Register from './Register';
 import Profile from './Profile';
 import UploadImage from './UploadImage';
 import MyPosts from './MyPosts';
+import ViewPost from './ViewPost';
+import EditPost from './EditPost';
 
 export {
   Login,
@@ -11,5 +13,7 @@ export {
   Register,
   Profile,
   UploadImage,
-  MyPosts
+  MyPosts,
+  ViewPost,
+  EditPost
 }
