@@ -126,7 +126,7 @@ export default function EditPost(props) {
         <CssBaseline />
         <Paper className={classes.paper}>
           <Typography component='h1' variant='h4'>
-            <FormattedMessage id={'post.editPost'} />
+            <FormattedMessage id={'post.edit'} />
           </Typography>
           {
             hasError && (
@@ -189,7 +189,7 @@ export default function EditPost(props) {
               color='primary'
               disabled={loading}
             >
-              <FormattedMessage id={'btn.send'} />
+              <FormattedMessage id={'btn.edit'} />
             </Button>
           </form>
         </Paper>

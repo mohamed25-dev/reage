@@ -1,24 +1,19 @@
-import axios from 'axios';
+import { useEffect } from 'react';
 import {
   Typography,
   makeStyles,
-  Button,
   Box,
   Container,
-  CssBaseline,
-  Input,
-  Paper,
   IconButton,
-  Grid
+  Paper,
 } from '@material-ui/core';
-import { PhotoCamera } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
+import { ThumbUpOutlined } from '@mui/icons-material';
 import { FormattedMessage } from 'react-intl';
 import { MainLayout } from '../layouts'
 
-import { TextInput, TextField } from '../components';
 import { useState } from 'react';
-
+import postHooks from '../hooks/postsHooks';
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -44,17 +39,17 @@ const useStyles = makeStyles((theme) => {
     },
     image: {
       marginBottom: theme.spacing(2),
-    },
-    imagePreview: {
-      width: '100px',
-      height: '100px'
+      width: '450px',
+      height: '450px'
     }
   }
 });
 
-export default function Login(props) {
+export default function EditPost(props) {
+  const postId = props.match.params.id;
   const classes = useStyles();
 
+  const { getPost, updatePost, likePost } = postHooks();
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
   const [file, setFile] = useState(null);
@@ -63,47 +58,84 @@ export default function Login(props) {
   const [hasError, setHasError] = useState(false);
   const [errors, setErrors] = useState([]);
 
+  useEffect(() => {
+    (async () => {
+      const [post, error] = await getPost(postId);
+      if (error) {
+        props.history.push('/');
+        return;
+      }
+
+      setTitle(post.title);
+      setBody(post.body);
+      setFile(`${process.env.REACT_APP_BACKEND_URL}/${post.image}`)
+    })();
+
+  }, []);
+
   const onSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
 
-    try {
-      setLoading(true);
-      const formData = new FormData();
-      
+    if (image) {
       formData.append('image', image, image.name);
-      formData.append('title', title);
-      formData.append('body', body);
+    }
 
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/posts`, formData);
+    formData.append('title', title);
+    formData.append('body', body);
 
-      props.history.push('/');
-    } catch (error) {
+    setLoading(true);
+    const [_, errors] = await updatePost(postId, formData);
+    setLoading(false);
+
+    if (errors) {
       setHasError(true);
-      setErrors(error.response.data.errors);
-    } finally {
-      setLoading(false);
+      setErrors(errors);
+    } else {
+      props.history.push('/');
     }
   }
 
-  const imageChangeHandler = (e) => {
-    setFile(URL.createObjectURL(e.target.files[0]));
-    setImage(e.target.files[0]);
-  }
-
-  const titleChangeHandler = (value) => {
-    setTitle(value);
-    setErrors([]);
-    setHasError(false)
-  }
-
-  const bodyChangeHandler = (value) => {
-    setBody(value);
-    setErrors([]);
-    setHasError(false)
-  }
-
   return (
-    <MainLayout title='View Post'>
+    <MainLayout>
+      <Container component="main" maxWidth='md'>
+        <Paper className={classes.paper}>
+          {
+            hasError && (
+              <Box marginTop={2}>
+
+                <Alert severity='error'>
+                  <br />
+                  {
+                    errors.map(e => (
+                      <li>
+                        {e}
+                      </li>
+                    ))
+                  }
+                </Alert>
+              </Box>
+            )
+          }
+
+          <form className={classes.form} onSubmit={onSubmit}>
+            <Typography variant='h4'>
+              {title}
+            </Typography>
+            
+            <img src={file} className={classes.image} />
+
+            <Typography variant='h5'>
+              {body}
+            </Typography>
+
+            <IconButton color="primary" aria-label="add to shopping cart" onClick={() => likePost(postId)}>
+              <ThumbUpOutlined/>
+            </IconButton>
+
+          </form>
+        </Paper>
+      </Container>
     </MainLayout>
   )
 }

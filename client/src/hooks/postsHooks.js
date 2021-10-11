@@ -37,10 +37,21 @@ const postsHooks = () => {
     }
   }
 
+  const likePost = async (postId) => {
+    try {
+      const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/posts/${postId}/like`, );
+
+      return [result, null];
+    } catch (error) {
+      return [null, error];
+    }
+  }
+
   return {
     getPosts,
     getPost,
-    updatePost
+    updatePost,
+    likePost
   }
 }
 
