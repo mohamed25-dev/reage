@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { Typography, Avatar, makeStyles, Button, Box, Link as MuLink } from '@material-ui/core';
+import { Typography, Avatar, Button, Box, Link as MuLink } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { FormattedMessage } from 'react-intl';
 import { Alert } from '@material-ui/lab';
 import { LockOutlined } from '@material-ui/icons';
@@ -7,6 +8,7 @@ import { TextInput } from '../components';
 import { useState } from 'react';
 import { Auth as AuthLayout } from '../layouts';
 import Auth  from '../Auth';
+
 const useStyles = makeStyles((theme) => {
   return {
     avatar: {
@@ -15,7 +17,8 @@ const useStyles = makeStyles((theme) => {
     },
 
     form: {
-      marginTop: theme.spacing(2)
+      marginTop: theme.spacing(2),
+      padding: theme.spacing(2),
     }
   }
 });

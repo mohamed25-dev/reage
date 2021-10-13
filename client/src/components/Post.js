@@ -1,27 +1,24 @@
 import React from 'react';
-import { Paper,} from '@mui/material';
+import { Link, Paper, Card } from '@mui/material';
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     marginBottom: theme.spacing(2)
-//   }
-// }))
-
-export default function Post({ image, title, body, variant = 'filled', ...props }) {
-  // const classes = useStyles();
-
+export default function Post({ image, title, body, variant = 'filled', postId = '#', numberofLikes=0, ...props }) {
   return (
     <Paper>
       <h4>{title}</h4>
-      <img
-        src={`${process.env.REACT_APP_BACKEND_URL}/${image}`}
-        srcSet={`${process.env.REACT_APP_BACKEND_URL}/${image}`}
-        alt={title}
-        loading="lazy"
-        height={320}
-        width={320}
-      />
-      <p>{body}</p>
+      <Link href={`/posts/${postId}/view`} >
+        <img
+          src={`${process.env.REACT_APP_BACKEND_URL}/${image}`}
+          srcSet={`${process.env.REACT_APP_BACKEND_URL}/${image}`}
+          alt={title}
+          loading="lazy"
+          height={320}
+          width={320}
+        />
+      </Link>
+      <Card>
+        <p>{body}</p>
+        <p>{numberofLikes}</p>
+      </Card>
     </Paper>
   );
 }

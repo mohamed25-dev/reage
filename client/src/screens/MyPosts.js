@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import {CircularProgress, Grid } from '@material-ui/core';
+import { Button, CircularProgress, Grid } from '@mui/material';
 import axios from 'axios';
 import { MainLayout } from '../layouts'
 import { useEffect } from 'react';
 import { Post } from '../components';
 import Auth from '../Auth';
+import { FormattedMessage } from 'react-intl';
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ export default function Home() {
     try {
       setLoading(true);
       const result = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/posts/me`);
-      
+
       setPosts(result.data.posts)
     } catch (error) {
       console.log(error);
@@ -34,15 +35,30 @@ export default function Home() {
     ? <CircularProgress />
     : (
       <MainLayout title='title.myPosts'>
-        <Grid container spacing={2}>
-          {
-            posts.map(p => (
-              <Grid item xs={4} key={p.img}>
-                <Post title={p.title} image={p.image} body={p.body} />
-              </Grid>
-            ))
-          }
-        </Grid>
+        {
+          posts.length > 0
+            ?
+            <Grid container spacing={2}>
+              {
+                posts.map(p => (
+                  <Grid item xs={4} key={p.img}>
+                    <Post title={p.title} image={p.image} body={p.body} />
+                  </Grid>
+                ))
+              }
+            </Grid>
+            :
+            (
+              <div style={{ alignItems: 'center', margin: 32 }}>
+                <h4>
+                  <FormattedMessage id='post.noPosts' />
+                </h4>
+                <Button variant='outlined' color='secondary' href='/posts/add'>
+                  <FormattedMessage id='post.add' />
+                </Button>
+              </div>
+            )
+        }
       </MainLayout>
     )
 

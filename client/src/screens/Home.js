@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {CircularProgress, Grid } from '@material-ui/core';
+import {CircularProgress, Grid } from '@mui/material';
 import axios from 'axios';
 import { MainLayout } from '../layouts'
 import { useEffect } from 'react';
@@ -36,7 +36,7 @@ export default function Home() {
           {
             posts.map(p => (
               <Grid item xs={4} key={p.img}>
-                <Post title={p.title} image={p.image} body={p.body} />
+                <Post title={p.title} image={p.image} body={p.body} postId={p._id} />
               </Grid>
             ))
           }

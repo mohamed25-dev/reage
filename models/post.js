@@ -52,9 +52,19 @@ const postSchema = mongoose.Schema({
     likeSchema
   ]
 }, {
-  timestamps: true
+  timestamps: true,
+  toJSON: {
+    virtuals: true
+  },
+  toObject:{
+    virtuals: true
+  }
 });
 
-const User = mongoose.model('Post', postSchema);
+postSchema.virtual('numberOfLikes').get(function() {
+  return this.likes.length;
+});
 
-module.exports = User;
+const Post = mongoose.model('Post', postSchema);
+
+module.exports = Post;

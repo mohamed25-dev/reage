@@ -21,6 +21,9 @@ module.exports = async (req, res) => {
   });
 
   if (post) {
+    post = post.toObject();
+
+    post.liked = false;
     return res.send({
       post
     });
@@ -35,6 +38,9 @@ module.exports = async (req, res) => {
     }, {
     new: true
   });
+
+  post = post.toObject();
+  post.liked = true;
 
   res.send({
     post

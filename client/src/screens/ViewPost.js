@@ -1,19 +1,23 @@
 import { useEffect } from 'react';
 import {
   Typography,
-  makeStyles,
   Box,
   Container,
   IconButton,
   Paper,
-} from '@material-ui/core';
+  Link,
+  Card
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { Alert } from '@material-ui/lab';
-import { ThumbUpOutlined } from '@mui/icons-material';
-import { FormattedMessage } from 'react-intl';
+import Auth from '../Auth';
+import { ThumbUp, ThumbUpOutlined, Edit, Delete } from '@mui/icons-material';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { MainLayout } from '../layouts'
-
+import { AlertDialog } from '../components';
 import { useState } from 'react';
 import postHooks from '../hooks/postsHooks';
+
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -47,57 +51,79 @@ const useStyles = makeStyles((theme) => {
 
 export default function EditPost(props) {
   const postId = props.match.params.id;
+  const editUrl = `/posts/${postId}/edit`;
   const classes = useStyles();
+  const { formatMessage } = useIntl();
 
-  const { getPost, updatePost, likePost } = postHooks();
+  const { getPost, updatePost, likePost, deletePost } = postHooks();
   const [title, setTitle] = useState();
+  const [numberOfLikes, setNumberOfLikes] = useState(0);
+  const [userId, setUserId] = useState(null);
   const [body, setBody] = useState();
   const [file, setFile] = useState(null);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [liked, setLiked] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    Auth.init();
     (async () => {
+      setLoading(true);
       const [post, error] = await getPost(postId);
+      console.log(post);
       if (error) {
+        setLoading(false);
         props.history.push('/');
         return;
       }
 
+      setLoading(false);
       setTitle(post.title);
       setBody(post.body);
+      setNumberOfLikes(post.numberOfLikes);
+      setUserId(post.user);
+      setLiked(post.liked);
       setFile(`${process.env.REACT_APP_BACKEND_URL}/${post.image}`)
     })();
 
   }, []);
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
 
-    if (image) {
-      formData.append('image', image, image.name);
+  const handleLikeClick = async () => {
+    const [post, error] = await likePost(postId);
+    if (error) {
+      return;
     }
 
-    formData.append('title', title);
-    formData.append('body', body);
+    setNumberOfLikes(post.numberOfLikes);
+    setLiked(post.liked);
+  }
 
-    setLoading(true);
-    const [_, errors] = await updatePost(postId, formData);
-    setLoading(false);
-
-    if (errors) {
+  const handleDeleteClick = async () => {
+    const [_, error] = await deletePost(postId);
+    if (error) {
+      setOpen(false);
       setHasError(true);
-      setErrors(errors);
-    } else {
-      props.history.push('/');
+      setErrors(error);
+      return;
     }
+
+    props.history.push('/');
+  }
+
+  const handleClickOpen = async () => {
+    setOpen(true);
+  }
+
+  const handleClose = async () => {
+    setOpen(false);
   }
 
   return (
-    <MainLayout>
+    <MainLayout loading={loading}>
       <Container component="main" maxWidth='md'>
         <Paper className={classes.paper}>
           {
@@ -118,22 +144,54 @@ export default function EditPost(props) {
             )
           }
 
-          <form className={classes.form} onSubmit={onSubmit}>
+          {
+            Auth.auth() && Auth.getUser()._id == userId ? (
+              <div>
+                <IconButton color="primary" aria-label="add to shopping cart" onClick={handleLikeClick}>
+                  <Link href={editUrl}>
+                    <Edit />
+                  </Link>
+                </IconButton>
+
+                <IconButton color="primary" aria-label="add to shopping cart" onClick={handleClickOpen}>
+                  <Link>
+                    <Delete />
+                  </Link>
+                </IconButton>
+
+                <AlertDialog
+                  title={formatMessage({ id: 'post.delete.title' })}
+                  body={formatMessage({ id: 'post.delete.body' })}
+                  open={open}
+                  handleAgree={handleDeleteClick}
+                  handleClose={handleClose}
+                />
+              </div>
+            ) : ''
+          }
+          <Box>
             <Typography variant='h4'>
               {title}
             </Typography>
-            
-            <img src={file} className={classes.image} />
 
-            <Typography variant='h5'>
-              {body}
-            </Typography>
+            <Card sx={{ marginY: 2, padding: 1 }}>
+              <img src={file} className={classes.image} />
+            </Card>
 
-            <IconButton color="primary" aria-label="add to shopping cart" onClick={() => likePost(postId)}>
-              <ThumbUpOutlined/>
-            </IconButton>
+            <Card sx={{ marginY: 2, padding: 1 }}>
+              <Typography variant='h5'>
+                {body}
+              </Typography>
+              {numberOfLikes || 0}
 
-          </form>
+              <IconButton color="primary" aria-label="add to shopping cart" onClick={handleLikeClick}>
+                {
+                  liked ? <ThumbUp /> : <ThumbUpOutlined />
+                }
+              </IconButton>
+            </Card>
+
+          </Box>
         </Paper>
       </Container>
     </MainLayout>

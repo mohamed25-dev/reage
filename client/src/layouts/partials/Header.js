@@ -1,11 +1,11 @@
 import {
-  makeStyles,
   Avatar,
   Menu,
   MenuItem,
   Link,
   Box
-} from '@material-ui/core';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import IconButton from '@mui/material/IconButton';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -67,8 +67,8 @@ function UserMenu({ user, logout }) {
 
   return (
     <>
-      <Button variant="outlined" color='secondary' href='/upload'>
-        Upload
+      <Button variant="outlined" color='secondary' href='/posts/add'>
+        <FormattedMessage id='post.add'/>
       </Button>
       
       <Box sx={{ flexGrow: 1 }} />

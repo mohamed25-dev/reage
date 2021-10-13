@@ -1,4 +1,5 @@
-import { makeStyles, Container, Paper, Box, Typography, Divider, Backdrop, CircularProgress } from '@material-ui/core';
+import { Container, Paper, Box, Typography, Divider, Backdrop, CircularProgress } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { FormattedMessage } from 'react-intl';
 import Footer from './partials/Footer';
 import Header from './partials/Header';
@@ -49,8 +50,7 @@ export default function Main({ children, title, loading }) {
   return (
     <div className={classes.root}>
       <Header />
-      <Container maxWidth='lg' component='main' className={classes.continer}>
-        <Paper square variant='outlined' className={classes.content}>
+      <Container maxWidth='lg' component='main' >
           {
             title &&
             <>
@@ -64,7 +64,6 @@ export default function Main({ children, title, loading }) {
           }
 
           {children}
-        </Paper>
       </Container>
       <Footer />
     </div>

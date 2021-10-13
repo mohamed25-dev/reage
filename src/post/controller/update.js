@@ -1,7 +1,7 @@
 const Post = require('../../../models/post');
 
 module.exports = async (req, res) => {
-  const errors = await validate(req.body, req.params.id);
+  const errors = await validate(req.body, req.params.id, req.user._id);
   if (errors.length > 0) {
     return res.status(400).json({ errors });
   }
@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
   res.send({ post: updatedPost });
 }
 
-const validate = async (post, id) => {
+const validate = async (post, id, userId) => {
   const errors = [];
   if (!post.title) {
     errors.push('الرجاء إضافة عنوان للصورة');
@@ -34,9 +34,14 @@ const validate = async (post, id) => {
     return errors;
   }
 
-  const isFound = await Post.findById(id);
-  if (!isFound) {
-    errors.push('لم يتم العثور على هذا المنشور')
+  const found = await Post.findById(id);
+  if (!found) {
+    errors.push('لم يتم العثور على هذا المنشور');
+    return errors;
+  }
+
+  if (!userId.equals(found.user)) {
+    errors.push('لا يمكن تعديل المنشور إلا من قبل صاحبه');
   }
 
   return errors;

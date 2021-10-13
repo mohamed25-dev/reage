@@ -1,4 +1,5 @@
-import { makeStyles, Typography, Container, Link as MuiLink } from '@material-ui/core';
+import { Typography, Container, Link as MuiLink } from '@mui/material';
+import { makeStyles } from '@mui/styles'
 import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles((theme) => ({

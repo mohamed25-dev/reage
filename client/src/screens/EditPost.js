@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import {
   Typography,
-  makeStyles,
   Button,
   Box,
   Container,
@@ -10,8 +9,9 @@ import {
   Paper,
   IconButton,
   Grid
-} from '@material-ui/core';
-import { PhotoCamera } from '@material-ui/icons';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { PhotoCamera } from '@mui/icons-material';
 import { Alert } from '@material-ui/lab';
 import { FormattedMessage } from 'react-intl';
 import { MainLayout } from '../layouts'
@@ -19,6 +19,7 @@ import { MainLayout } from '../layouts'
 import { TextInput, TextField } from '../components';
 import { useState } from 'react';
 import postHooks from '../hooks/postsHooks';
+
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -90,7 +91,7 @@ export default function EditPost(props) {
 
     formData.append('title', title);
     formData.append('body', body);
-    
+
     setLoading(true);
     const [_, errors] = await updatePost(postId, formData);
     setLoading(false);
@@ -170,7 +171,7 @@ export default function EditPost(props) {
             <Grid container spacing={2} className={classes.image}>
               <Grid item xs={6}>
                 <label htmlFor="icon-button-file">
-                  <Input accept="image/*" id="icon-button-file" type="file" className={classes.imageInput} onChange={imageChangeHandler} />
+                  <Input accept="image/*" id="icon-button-file" type="file" sx={{ display: 'none' }} onChange={imageChangeHandler} />
                   <IconButton color="primary" aria-label="upload picture" component="span">
                     <PhotoCamera />
                     <FormattedMessage id='post.image' />
@@ -188,6 +189,8 @@ export default function EditPost(props) {
               variant='contained'
               color='primary'
               disabled={loading}
+              fullWidth
+              sx={{ marginTop: 2 }}
             >
               <FormattedMessage id={'btn.edit'} />
             </Button>

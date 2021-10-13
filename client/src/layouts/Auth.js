@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core/styles';
-import { Container, CssBaseline, Paper, Box, Typography, Link } from '@material-ui/core';
+import { makeStyles } from '@mui/styles';
+import { Container, CssBaseline, Paper, Box, Typography, Link } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles(theme => ({

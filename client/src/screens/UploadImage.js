@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {
   Typography,
-  makeStyles,
   Button,
   Box,
   Container,
@@ -10,8 +9,9 @@ import {
   Paper,
   IconButton,
   Grid
-} from '@material-ui/core';
-import { PhotoCamera } from '@material-ui/icons';
+} from '@mui/material';
+import { makeStyles, styled } from '@mui/styles';
+import { PhotoCamera } from '@mui/icons-material';
 import { Alert } from '@material-ui/lab';
 import { FormattedMessage } from 'react-intl';
 import { MainLayout } from '../layouts'
@@ -35,8 +35,7 @@ const useStyles = makeStyles((theme) => {
       alignItems: 'center'
     },
     form: {
-      marginTop: theme.spacing(2),
-      width: '60%'
+      marginBottom: theme.spacing(2),
     },
     imageInput: {
       marginBottom: theme.spacing(2),
@@ -69,7 +68,7 @@ export default function Login(props) {
     try {
       setLoading(true);
       const formData = new FormData();
-      
+
       formData.append('image', image, image.name);
       formData.append('title', title);
       formData.append('body', body);
@@ -104,75 +103,73 @@ export default function Login(props) {
 
   return (
     <MainLayout>
-      <Container component="main" maxWidth='md'>
-        <CssBaseline />
-        <Paper className={classes.paper}>
-          <Typography component='h1' variant='h4'>
-            <FormattedMessage id={'title.uploadImage'} />
-          </Typography>
-          {
-            hasError && (
-              <Box marginTop={2}>
+      <CssBaseline />
+      <Container sx={{ width: '50%', alignItems: 'center', paddingTop: 2}}>
+        <Typography component='h1' variant='h4'>
+          <FormattedMessage id={'title.uploadImage'} />
+        </Typography>
+        {
+          hasError && (
+            <Box marginTop={2}>
 
-                <Alert severity='error'>
-                  <br />
-                  {
-                    errors.map(e => (
-                      <li>
-                        {e}
-                      </li>
-                    ))
-                  }
-                </Alert>
-              </Box>
-            )
-          }
+              <Alert severity='error'>
+                <br />
+                {
+                  errors.map(e => (
+                    <li>
+                      {e}
+                    </li>
+                  ))
+                }
+              </Alert>
+            </Box>
+          )
+        }
 
-          <form className={classes.form} onSubmit={onSubmit}>
-            <TextInput
-              required
-              Component='TextInput'
-              label='post.title'
-              type='text'
-              onChange={titleChangeHandler}
-            />
+        <form onSubmit={onSubmit} className={classes.form}>
+          <TextInput
+            required
+            Component='TextInput'
+            label='post.title'
+            type='text'
+            onChange={titleChangeHandler}
+          />
 
-            <div>
-              <TextField
-                required
-                label='post.body'
-                multiline
-                rows={4}
-                onChange={bodyChangeHandler}
-              />
-            </div>
+          <TextField
+            required
+            label='post.body'
+            multiline
+            rows={4}
+            onChange={bodyChangeHandler}
+          />
 
-            <Grid container spacing={2} className={classes.image}>
-              <Grid item xs={6}>
-                <label htmlFor="icon-button-file">
-                  <Input accept="image/*" id="icon-button-file" type="file" className={classes.imageInput} onChange={imageChangeHandler} />
-                  <IconButton color="primary" aria-label="upload picture" component="span">
-                    <PhotoCamera />
-                    <FormattedMessage id='post.image'/>
-                  </IconButton>
-                </label>
-              </Grid>
-
-              <Grid item xs={4}>
-                <img src={file} className={classes.imagePreview} />
-              </Grid>
+          <Grid container spacing={2} >
+            <Grid item xs={6}>
+              <label htmlFor="icon-button-file">
+                <Input accept="image/*" id="icon-button-file" type="file" sx={{ display: 'none' }} onChange={imageChangeHandler} />
+                <IconButton color="primary" aria-label="upload picture" component="span">
+                  <PhotoCamera fontSize='large'/>
+                </IconButton>
+                <FormattedMessage id='post.image' />
+              </label>
             </Grid>
 
-            <Button
-              type='submit'
-              variant='contained'
-              color='primary'
-              disabled={loading}
-            >
-              <FormattedMessage id={'btn.send'} />
-            </Button>
-          </form>
-        </Paper>
+            <Grid item xs={4}>
+              <img src={file} className={classes.imagePreview} />
+            </Grid>
+          </Grid>
+
+          <Button
+            type='submit'
+            variant='contained'
+            color='primary'
+            fullWidth
+            sx={{marginTop: 2}}
+            disabled={loading}
+          >
+            <FormattedMessage id={'btn.send'} />
+          </Button>
+        </form>
       </Container>
     </MainLayout>
   )
