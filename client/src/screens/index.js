@@ -2,7 +2,7 @@ import Login from "./Login";
 import Home from './Home';
 import Register from './Register';
 import Profile from './Profile';
-import UploadImage from './UploadImage';
+import AddPost from './AddPost';
 import MyPosts from './MyPosts';
 import ViewPost from './ViewPost';
 import EditPost from './EditPost';
@@ -12,7 +12,7 @@ export {
   Home,
   Register,
   Profile,
-  UploadImage,
+  AddPost,
   MyPosts,
   ViewPost,
   EditPost

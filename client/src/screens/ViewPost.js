@@ -6,8 +6,13 @@ import {
   IconButton,
   Paper,
   Link,
-  Card
+  Card,
+  CardHeader,
+  CardContent,
+  CardMedia,
+  CardActions
 } from '@mui/material';
+import { pink } from '@mui/material/colors';
 import { makeStyles } from '@mui/styles';
 import { Alert } from '@material-ui/lab';
 import Auth from '../Auth';
@@ -111,7 +116,7 @@ export default function EditPost(props) {
       return;
     }
 
-    props.history.push('/');
+    props.history.push('/me');
   }
 
   const handleClickOpen = async () => {
@@ -144,54 +149,55 @@ export default function EditPost(props) {
             )
           }
 
-          {
-            Auth.auth() && Auth.getUser()._id == userId ? (
-              <div>
-                <IconButton color="primary" aria-label="add to shopping cart" onClick={handleLikeClick}>
-                  <Link href={editUrl}>
-                    <Edit />
-                  </Link>
-                </IconButton>
+          <Card>
+            <CardHeader
+              title={title}
+            />
 
-                <IconButton color="primary" aria-label="add to shopping cart" onClick={handleClickOpen}>
-                  <Link>
-                    <Delete />
-                  </Link>
-                </IconButton>
-
-                <AlertDialog
-                  title={formatMessage({ id: 'post.delete.title' })}
-                  body={formatMessage({ id: 'post.delete.body' })}
-                  open={open}
-                  handleAgree={handleDeleteClick}
-                  handleClose={handleClose}
-                />
-              </div>
-            ) : ''
-          }
-          <Box>
-            <Typography variant='h4'>
-              {title}
-            </Typography>
-
-            <Card sx={{ marginY: 2, padding: 1 }}>
+            <CardMedia sx={{ marginY: 2, padding: 1 }}>
               <img src={file} className={classes.image} />
-            </Card>
+            </CardMedia>
 
-            <Card sx={{ marginY: 2, padding: 1 }}>
+            <CardContent sx={{ marginY: 2, padding: 1 }}>
               <Typography variant='h5'>
                 {body}
               </Typography>
-              {numberOfLikes || 0}
+            </CardContent>
 
+            <CardActions sx={{justifyContent: 'center'}}>
+              {
+                Auth.auth() && Auth.getUser()._id == userId ? (
+                  <div>
+                    <IconButton aria-label="add to shopping cart" onClick={handleLikeClick}>
+                      <Link href={editUrl}>
+                        <Edit sx={{ color: pink[500] }} />
+                      </Link>
+                    </IconButton>
+
+                    <IconButton  aria-label="add to shopping cart" onClick={handleClickOpen}>
+                      <Link>
+                        <Delete sx={{ color: pink[500] }}/>
+                      </Link>
+                    </IconButton>
+
+                    <AlertDialog
+                      title={formatMessage({ id: 'post.delete.title' })}
+                      body={formatMessage({ id: 'post.delete.body' })}
+                      open={open}
+                      handleAgree={handleDeleteClick}
+                      handleClose={handleClose}
+                    />
+                  </div>
+                ) : ''
+              }
+              {numberOfLikes || 0}
               <IconButton color="primary" aria-label="add to shopping cart" onClick={handleLikeClick}>
                 {
                   liked ? <ThumbUp /> : <ThumbUpOutlined />
                 }
               </IconButton>
-            </Card>
-
-          </Box>
+            </CardActions>
+          </Card>
         </Paper>
       </Container>
     </MainLayout>

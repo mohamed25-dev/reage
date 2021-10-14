@@ -1,10 +1,9 @@
 import './App.css';
 import { useEffect } from 'react';
 import Auth from './Auth';
-import RTL from './components/RTL';
 import AppRoute from './AppRoute';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import { Login, Home, Register, Profile, UploadImage, MyPosts, ViewPost, EditPost } from './screens';
+import { Login, Home, Register, Profile, AddPost, MyPosts, ViewPost, EditPost } from './screens';
 
 function App() {
 
@@ -17,7 +16,7 @@ function App() {
       <div className="App">
         <Switch>
           <AppRoute exact path="/" component={Home} />
-          <AppRoute exact path="/posts/add" component={UploadImage} can={Auth.auth} redirect='/login' />
+          <AppRoute exact path="/posts/add" component={AddPost} can={Auth.auth} redirect='/login' />
           <AppRoute exact path="/posts/:id/view" component={ViewPost} can={Auth.auth} redirect='/login' />
           <AppRoute exact path="/posts/:id/edit" component={EditPost} can={Auth.auth} redirect='/login' />
           <AppRoute exact path="/me" component={MyPosts} can={Auth.auth} redirect='/login' />

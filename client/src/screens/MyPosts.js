@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Button, CircularProgress, Grid } from '@mui/material';
+import { Button, CircularProgress, Grid, Typography, Box } from '@mui/material';
+import { Add } from '@mui/icons-material';
 import axios from 'axios';
 import { MainLayout } from '../layouts'
 import { useEffect } from 'react';
-import { Post } from '../components';
+import { Post, NoPost } from '../components';
 import Auth from '../Auth';
 import { FormattedMessage } from 'react-intl';
 
@@ -34,7 +35,7 @@ export default function Home() {
   const render = loading
     ? <CircularProgress />
     : (
-      <MainLayout title='title.myPosts'>
+      <MainLayout>
         {
           posts.length > 0
             ?
@@ -42,22 +43,13 @@ export default function Home() {
               {
                 posts.map(p => (
                   <Grid item xs={4} key={p.img}>
-                    <Post title={p.title} image={p.image} body={p.body} />
+                    <Post title={p.title} image={p.image} body={p.body} postId={p._id} />
                   </Grid>
                 ))
               }
             </Grid>
             :
-            (
-              <div style={{ alignItems: 'center', margin: 32 }}>
-                <h4>
-                  <FormattedMessage id='post.noPosts' />
-                </h4>
-                <Button variant='outlined' color='secondary' href='/posts/add'>
-                  <FormattedMessage id='post.add' />
-                </Button>
-              </div>
-            )
+            <NoPost message='post.profileNoPosts'/>
         }
       </MainLayout>
     )

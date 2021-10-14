@@ -6,7 +6,6 @@ import {
   Container,
   CssBaseline,
   Input,
-  Paper,
   IconButton,
   Grid
 } from '@mui/material';
@@ -106,7 +105,7 @@ export default function Login(props) {
       <CssBaseline />
       <Container sx={{ width: '50%', alignItems: 'center', paddingTop: 2}}>
         <Typography component='h1' variant='h4'>
-          <FormattedMessage id={'title.uploadImage'} />
+          <FormattedMessage id={'title.addPost'} />
         </Typography>
         {
           hasError && (

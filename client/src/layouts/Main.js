@@ -50,7 +50,7 @@ export default function Main({ children, title, loading }) {
   return (
     <div className={classes.root}>
       <Header />
-      <Container maxWidth='lg' component='main' >
+      <Container maxWidth='lg' component='main'>
           {
             title &&
             <>

@@ -2,11 +2,13 @@ import {
   Avatar,
   Menu,
   MenuItem,
-  Link,
-  Box
+  Link as MuLink,
+  Box,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import IconButton from '@mui/material/IconButton';
+import { Add } from '@mui/icons-material';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -20,7 +22,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     cursor: 'pointer',
-    textAlign: 'right'
+    textAlign: 'right',
+    textDecoration: 'none',
+    color: 'white'
   },
   button: {
     marginLeft: 2
@@ -32,9 +36,9 @@ export default function Header() {
   const user = Auth.getUser();
 
   return (
-    <AppBar position="static" sx={{ background: 'white' }}>
+    <AppBar position="static" sx={{ background: 'primary', marginBottom: 4 }}>
       <Toolbar>
-        <Typography variant="h6" component="div" className={classes.title}>
+        <Typography variant="h4" className={classes.title} component={Link} to='/'>
           <FormattedMessage id='app.name' />
         </Typography>
 
@@ -67,10 +71,11 @@ function UserMenu({ user, logout }) {
 
   return (
     <>
-      <Button variant="outlined" color='secondary' href='/posts/add'>
-        <FormattedMessage id='post.add'/>
-      </Button>
-      
+      <IconButton component={Link} to='/posts/add'>
+        <Add sx={{ color: 'white', fontSize: 'larger' }} />
+      </IconButton>
+      <FormattedMessage id='post.add' />
+
       <Box sx={{ flexGrow: 1 }} />
       <div>
         {user?.name}
@@ -99,16 +104,12 @@ function UserMenu({ user, logout }) {
           open={Boolean(menu)}
           onClose={handleClose}
         >
-          <Link href='/me'>
-            <MenuItem>
-              <FormattedMessage id='title.myPosts' />
-            </MenuItem>
-          </Link>
-          <Link href='/profile'>
-            <MenuItem>
-              <FormattedMessage id='header.profile' />
-            </MenuItem>
-          </Link>
+          <MenuItem component={Link} to='/me'>
+            <FormattedMessage id='title.myPosts' />
+          </MenuItem>
+          <MenuItem component={Link} to='/profile'>
+            <FormattedMessage id='header.profile' />
+          </MenuItem>
           <MenuItem onClick={handleLogout}>
             <FormattedMessage id='header.logout' />
           </MenuItem>

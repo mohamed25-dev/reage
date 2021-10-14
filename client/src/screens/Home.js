@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import {CircularProgress, Grid } from '@mui/material';
+import { CircularProgress, Grid } from '@mui/material';
 import axios from 'axios';
 import { MainLayout } from '../layouts'
 import { useEffect } from 'react';
-import { Post } from '../components';
+import { Post, NoPost } from '../components';
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -32,15 +32,21 @@ export default function Home() {
     ? <CircularProgress />
     : (
       <MainLayout>
-        <Grid container spacing={2}>
-          {
-            posts.map(p => (
-              <Grid item xs={4} key={p.img}>
-                <Post title={p.title} image={p.image} body={p.body} postId={p._id} />
-              </Grid>
-            ))
-          }
-        </Grid>
+        {
+          posts.length > 0
+            ? <Grid container spacing={2}>
+              {
+                posts.map(p => (
+                  <Grid item xs={4} key={p.img}>
+                    <Post title={p.title} image={p.image} body={p.body} postId={p._id} />
+                  </Grid>
+                ))
+              }
+            </Grid>
+            :
+           <NoPost message='post.noPosts'/>
+        }
+
       </MainLayout>
     )
 

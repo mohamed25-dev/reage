@@ -46,7 +46,7 @@ export default function Login(props) {
         confirmPassword
       });
 
-      Auth.login(result);
+      Auth.login(result.data.user);
       props.history.push('/');
 
     } catch (error) {
