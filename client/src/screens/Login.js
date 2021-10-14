@@ -7,7 +7,8 @@ import { LockOutlined } from '@material-ui/icons';
 import { TextInput } from '../components';
 import { useState } from 'react';
 import { Auth as AuthLayout } from '../layouts';
-import Auth  from '../Auth';
+import Auth from '../Auth';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -109,11 +110,11 @@ export default function Login(props) {
 function NoAccount() {
   return (
     <Typography align='center'>
-      <MuLink href='/register' passHref>
+      <Link to='/register'>
         <MuLink variant='body2'>
           <FormattedMessage id={'dontHaveAccount'} />
         </MuLink>
-      </MuLink>
+      </Link>
     </Typography>
   )
 }

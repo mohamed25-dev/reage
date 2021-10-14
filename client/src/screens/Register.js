@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { Typography, Avatar, Button, Box, Link as MuLink } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Alert } from '@material-ui/lab';
@@ -137,11 +138,11 @@ export default function Login(props) {
 function NoAccount() {
   return (
     <Typography align='center'>
-      <MuLink href='/login' passHref>
+      <Link to='/login' passHref>
         <MuLink variant='body2'>
           <FormattedMessage id={'haveAccount'} />
         </MuLink>
-      </MuLink>
+      </Link>
     </Typography>
   )
 }

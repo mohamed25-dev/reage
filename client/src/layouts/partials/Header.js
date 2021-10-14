@@ -52,7 +52,7 @@ export default function Header() {
 
 function GuestMenu() {
   return (
-    <Button href='/login' color="inherit" variant="outlined">
+    <Button component={Link} to='/login' color="inherit" variant="outlined">
       <FormattedMessage id={'header.login'} />
     </Button>
   )
