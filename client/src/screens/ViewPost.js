@@ -22,6 +22,7 @@ import { MainLayout } from '../layouts'
 import { AlertDialog } from '../components';
 import { useState } from 'react';
 import postHooks from '../hooks/postsHooks';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -168,7 +169,7 @@ export default function EditPost(props) {
               {
                 Auth.auth() && Auth.getUser()._id == userId ? (
                   <div>
-                    <IconButton aria-label="add to shopping cart" href={editUrl}>
+                    <IconButton aria-label="add to shopping cart" onClick= { () => props.history.push(editUrl)}>
                         <Edit sx={{ color: pink[500] }} />
                     </IconButton>
 
