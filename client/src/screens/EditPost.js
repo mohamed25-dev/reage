@@ -76,7 +76,7 @@ export default function EditPost(props) {
 
       setTitle(post.title);
       setBody(post.body);
-      setFile(`${process.env.REACT_APP_BACKEND_URL}/${post.image}`)
+      setFile(`${process.env.REACT_APP_IMAGE_URL}/${post.image}`)
     })();
 
   }, []);

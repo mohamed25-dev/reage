@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Typography,
   Box,
   Container,
   IconButton,
   Paper,
-  Link,
   Card,
   CardHeader,
   CardContent,
@@ -91,7 +91,7 @@ export default function EditPost(props) {
       setNumberOfLikes(post.numberOfLikes);
       setUserId(post.user);
       setLiked(post.liked);
-      setFile(`${process.env.REACT_APP_BACKEND_URL}/${post.image}`)
+      setFile(`${process.env.REACT_APP_IMAGE_URL}/${post.image}`)
     })();
 
   }, []);
@@ -168,16 +168,12 @@ export default function EditPost(props) {
               {
                 Auth.auth() && Auth.getUser()._id == userId ? (
                   <div>
-                    <IconButton aria-label="add to shopping cart" onClick={handleLikeClick}>
-                      <Link href={editUrl}>
+                    <IconButton aria-label="add to shopping cart" href={editUrl}>
                         <Edit sx={{ color: pink[500] }} />
-                      </Link>
                     </IconButton>
 
-                    <IconButton  aria-label="add to shopping cart" onClick={handleClickOpen}>
-                      <Link>
+                    <IconButton aria-label="add to shopping cart" onClick={handleClickOpen}>
                         <Delete sx={{ color: pink[500] }}/>
-                      </Link>
                     </IconButton>
 
                     <AlertDialog
