@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Typography, Avatar, Button, Box, Link as MuLink } from '@mui/material';
+import { Typography, Avatar, Button, Box, Link as MuLink, Alert } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { Alert } from '@material-ui/lab';
 import { LockOutlined } from '@mui/icons-material';
 import { FormattedMessage } from 'react-intl';
 import { Auth as AuthLayout } from '../layouts'

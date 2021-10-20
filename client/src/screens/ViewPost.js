@@ -8,10 +8,10 @@ import {
   CardHeader,
   CardContent,
   CardMedia,
-  CardActions
+  CardActions,
+  Alert
 } from '@mui/material';
 import { pink } from '@mui/material/colors';
-import { Alert } from '@material-ui/lab';
 import Auth from '../Auth';
 import { ThumbUp, ThumbUpOutlined, Edit, Delete } from '@mui/icons-material';
 import { useIntl } from 'react-intl';

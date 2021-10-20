@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { Typography, Avatar, Button, Box, Link as MuLink } from '@mui/material';
+import { Typography, Avatar, Button, Box, Link as MuLink, Alert } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { FormattedMessage } from 'react-intl';
-import { Alert } from '@material-ui/lab';
-import { LockOutlined } from '@material-ui/icons';
+import { LockOutlined } from '@mui/icons-material';
 import { TextInput } from '../components';
 import { useState } from 'react';
 import { Auth as AuthLayout } from '../layouts';

@@ -7,11 +7,11 @@ import {
   CssBaseline,
   Input,
   IconButton,
-  Grid
+  Grid,
+  Alert
 } from '@mui/material';
 import { makeStyles, styled } from '@mui/styles';
 import { PhotoCamera } from '@mui/icons-material';
-import { Alert } from '@material-ui/lab';
 import { FormattedMessage } from 'react-intl';
 import { MainLayout } from '../layouts'
 

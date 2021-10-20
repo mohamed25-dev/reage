@@ -1,7 +1,6 @@
 import React from 'react';
-import { Card, CardHeader, CardContent, CardMedia } from '@mui/material';
+import { Card, CardHeader, CardContent, CardMedia,Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { Typography } from '@material-ui/core';
 
 export default function Post({ image, title, body, variant = 'filled', postId = '#', numberofLikes = 0, ...props }) {
   return (

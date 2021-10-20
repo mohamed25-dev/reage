@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, Alert } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { Alert } from '@material-ui/lab';
 import { MainLayout } from '../layouts';
 import { TextInput } from '../components';
 import { FormattedMessage } from 'react-intl';
