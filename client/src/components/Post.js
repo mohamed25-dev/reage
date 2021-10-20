@@ -6,7 +6,7 @@ import { Typography } from '@material-ui/core';
 export default function Post({ image, title, body, variant = 'filled', postId = '#', numberofLikes = 0, ...props }) {
   return (
     <Card 
-      sx={{ marginBottom: 2, textDecoration: 'none' }} 
+      sx={{ textDecoration: 'none' }} 
       component={Link} 
       to={`/posts/${postId}/view`}
       >

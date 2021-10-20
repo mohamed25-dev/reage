@@ -50,7 +50,7 @@ export default function Home() {
                   <Add />
                 </Fab>
 
-                <Grid container spacing={2} >
+                <Grid container spacing={1} >
                   {
                     posts.map(p => (
                       <Grid item xs={12} md={6} lg={4} key={p.img}>

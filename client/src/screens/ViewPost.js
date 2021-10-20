@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import {
   Typography,
   Box,
   Container,
   IconButton,
-  Paper,
   Card,
   CardHeader,
   CardContent,
@@ -13,61 +11,26 @@ import {
   CardActions
 } from '@mui/material';
 import { pink } from '@mui/material/colors';
-import { makeStyles } from '@mui/styles';
 import { Alert } from '@material-ui/lab';
 import Auth from '../Auth';
 import { ThumbUp, ThumbUpOutlined, Edit, Delete } from '@mui/icons-material';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { MainLayout } from '../layouts'
 import { AlertDialog } from '../components';
 import { useState } from 'react';
 import postHooks from '../hooks/postsHooks';
-import { Button } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => {
-  return {
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-      minHeight: '100vh',
-      background: 'url("images/bg/login.jpg")'
-    },
-    paper: {
-      marginTop: theme.spacing(8),
-      padding: theme.spacing(2),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center'
-    },
-    form: {
-      marginTop: theme.spacing(2),
-      width: '60%'
-    },
-    imageInput: {
-      marginBottom: theme.spacing(2),
-      display: 'none'
-    },
-    image: {
-      marginBottom: theme.spacing(2),
-      width: '450px',
-      height: '450px'
-    }
-  }
-});
 
 export default function EditPost(props) {
   const postId = props.match.params.id;
   const editUrl = `/posts/${postId}/edit`;
-  const classes = useStyles();
   const { formatMessage } = useIntl();
 
-  const { getPost, updatePost, likePost, deletePost } = postHooks();
+  const { getPost, likePost, deletePost } = postHooks();
   const [title, setTitle] = useState();
   const [numberOfLikes, setNumberOfLikes] = useState(0);
   const [userId, setUserId] = useState(null);
   const [body, setBody] = useState();
   const [file, setFile] = useState(null);
-  const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [liked, setLiked] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -169,7 +132,7 @@ export default function EditPost(props) {
 
           <CardActions sx={{ justifyContent: 'center' }}>
             {
-              Auth.auth() && Auth.getUser()._id == userId ? (
+              Auth.auth() && Auth.getUser()._id === userId ? (
                 <div>
                   <IconButton aria-label="add to shopping cart" onClick={() => props.history.push(editUrl)}>
                     <Edit sx={{ color: pink[500] }} />

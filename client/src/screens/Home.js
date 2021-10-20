@@ -1,16 +1,31 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { CircularProgress, Grid, Button, Container, Fab } from '@mui/material';
+import { CircularProgress, Grid, Button, Container, Fab, Pagination } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import axios from 'axios';
 import { MainLayout } from '../layouts'
 import { useEffect } from 'react';
-import { Post, NoPost } from '../components';
+import { Post, NoPost, Paginate } from '../components';
 
-export default function Home() {
+export default function Home(props) {
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [postsCount, setPostsCount] = useState(0);
+
+  const loadPage = async ({p = 1}) => {
+    try {
+      setLoading(true);
+      const result = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/posts?p=${p}`);
+      setPostsCount(result.data.count);
+      setPosts(result.data.posts);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     init();
@@ -19,18 +34,18 @@ export default function Home() {
   useEffect(() => {
   }, [loading]);
 
+  useEffect(() => {
+    loadPage({p: page});
+  }, [page]);
+
   const init = async () => {
-    try {
-      setLoading(true);
-      const result = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/posts`);
-      console.log(result.data);
-      setPosts(result.data.posts)
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
+    const search = props.location.search;
+    const params = new URLSearchParams(search);
+    let p = parseInt(params.get('p'));
+
+    await loadPage({p});
   }
+
   const render = loading
     ? <CircularProgress />
     : (
@@ -48,7 +63,7 @@ export default function Home() {
                 }}>
                   <Add />
                 </Fab>
-                <Grid container spacing={2}>
+                <Grid container columnSpacing={1} rowSpacing={1}>
                   {
                     posts.map(p => (
                       <Grid item xs={12} md={6} lg={4} key={p.img}>
@@ -64,6 +79,7 @@ export default function Home() {
 
         }
 
+        <Paginate count={postsCount} page={page} props={props} onChange={(e, p) => setPage(p)}/>
       </MainLayout>
     )
 
