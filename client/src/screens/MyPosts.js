@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Button, CircularProgress, Grid, Typography, Box } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { Button, CircularProgress, Grid, Container, Fab } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import axios from 'axios';
 import { MainLayout } from '../layouts'
@@ -38,18 +39,30 @@ export default function Home() {
       <MainLayout>
         {
           posts.length > 0
-            ?
-            <Grid container spacing={2}>
-              {
-                posts.map(p => (
-                  <Grid item xs={12} md={6} lg={4}  key={p.img}>
-                    <Post title={p.title} image={p.image} body={p.body} postId={p._id} />
-                  </Grid>
-                ))
-              }
-            </Grid>
+            ? (
+
+              <Container>
+                <Fab color="primary" aria-label="أضف منشورا" sx={{
+                  position: 'fixed',
+                  bottom: 16,
+                  left: 16,
+                }}>
+                  <Add />
+                </Fab>
+
+                <Grid container spacing={2} >
+                  {
+                    posts.map(p => (
+                      <Grid item xs={12} md={6} lg={4} key={p.img}>
+                        <Post title={p.title} image={p.image} body={p.body} postId={p._id} />
+                      </Grid>
+                    ))
+                  }
+                </Grid>
+              </Container>
+            ) 
             :
-            <NoPost message='post.profileNoPosts'/>
+            <NoPost message='post.profileNoPosts' />
         }
       </MainLayout>
     )

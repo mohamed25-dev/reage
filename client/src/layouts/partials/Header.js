@@ -71,11 +71,6 @@ function UserMenu({ user, logout }) {
 
   return (
     <>
-      <IconButton component={Link} to='/posts/add'>
-        <Add sx={{ color: 'white', fontSize: 'larger' }} />
-      </IconButton>
-      <FormattedMessage id='post.add' />
-
       <Box sx={{ flexGrow: 1 }} />
       <div>
         {user?.name}

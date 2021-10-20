@@ -143,7 +143,7 @@ export default function Login(props) {
           />
 
           <Grid container spacing={2} >
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <label htmlFor="icon-button-file">
                 <Input accept="image/*" id="icon-button-file" type="file" sx={{ display: 'none' }} onChange={imageChangeHandler} />
                 <IconButton color="primary" aria-label="upload picture" component="span">
@@ -153,7 +153,7 @@ export default function Login(props) {
               </label>
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <img src={file} className={classes.imagePreview} />
             </Grid>
           </Grid>
