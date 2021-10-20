@@ -1,15 +1,13 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, CircularProgress, Grid, Container, Fab } from '@mui/material';
+import {CircularProgress, Grid, Container, Fab } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import axios from 'axios';
 import { MainLayout } from '../layouts'
 import { useEffect } from 'react';
 import { Post, NoPost } from '../components';
 import Auth from '../Auth';
-import { FormattedMessage } from 'react-intl';
 
-export default function Home() {
+export default function Home(props) {
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
 
@@ -42,7 +40,10 @@ export default function Home() {
             ? (
 
               <Container>
-                <Fab color="primary" aria-label="أضف منشورا" sx={{
+                <Fab color="primary" 
+                aria-label="أضف منشورا" 
+                onClick={() => props.history.push('/posts/add')}
+                sx={{
                   position: 'fixed',
                   bottom: 16,
                   left: 16,

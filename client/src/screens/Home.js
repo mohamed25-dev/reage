@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
-import { CircularProgress, Grid, Button, Container, Fab, Pagination } from '@mui/material';
+import { CircularProgress, Grid, Container, Fab } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import axios from 'axios';
 import { MainLayout } from '../layouts'
@@ -56,11 +54,16 @@ export default function Home(props) {
             ?
             (
               <Container>
-                <Fab color="primary" aria-label="أضف منشورا" sx={{
+                <Fab 
+                 color="primary" 
+                 aria-label="أضف منشورا" 
+                 onClick={() => props.history.push('/posts/add')}
+                  sx={{
                   position: 'fixed',
                   bottom: 16,
                   left: 16,
-                }}>
+                  }}
+                >
                   <Add />
                 </Fab>
                 <Grid container columnSpacing={1} rowSpacing={1}>
