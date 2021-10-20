@@ -6,7 +6,6 @@ import {
   Container,
   CssBaseline,
   Input,
-  Paper,
   IconButton,
   Grid
 } from '@mui/material';
@@ -123,79 +122,78 @@ export default function EditPost(props) {
 
   return (
     <MainLayout>
-      <Container component="main" maxWidth='md'>
-        <CssBaseline />
-        <Paper className={classes.paper}>
-          <Typography component='h1' variant='h4'>
-            <FormattedMessage id={'post.edit'} />
-          </Typography>
-          {
-            hasError && (
-              <Box marginTop={2}>
+      <CssBaseline />
+      <Container sx={{ width: '50%', alignItems: 'center', paddingTop: 2 }}>
 
-                <Alert severity='error'>
-                  <br />
-                  {
-                    errors.map(e => (
-                      <li>
-                        {e}
-                      </li>
-                    ))
-                  }
-                </Alert>
-              </Box>
-            )
-          }
+        <Typography component='h1' variant='h4'>
+          <FormattedMessage id={'post.edit'} />
+        </Typography>
+        {
+          hasError && (
+            <Box marginTop={2}>
 
-          <form className={classes.form} onSubmit={onSubmit}>
-            <TextInput
+              <Alert severity='error'>
+                <br />
+                {
+                  errors.map(e => (
+                    <li>
+                      {e}
+                    </li>
+                  ))
+                }
+              </Alert>
+            </Box>
+          )
+        }
+
+        <form onSubmit={onSubmit}>
+          <TextInput
+            required
+            Component='TextInput'
+            label='post.title'
+            type='text'
+            value={title}
+            onChange={titleChangeHandler}
+          />
+
+          <div>
+            <TextField
               required
-              Component='TextInput'
-              label='post.title'
-              type='text'
-              value={title}
-              onChange={titleChangeHandler}
+              label='post.body'
+              multiline
+              rows={4}
+              value={body}
+              onChange={bodyChangeHandler}
             />
+          </div>
 
-            <div>
-              <TextField
-                required
-                label='post.body'
-                multiline
-                rows={4}
-                value={body}
-                onChange={bodyChangeHandler}
-              />
-            </div>
-
-            <Grid container spacing={2} className={classes.image}>
-              <Grid item xs={6}>
-                <label htmlFor="icon-button-file">
-                  <Input accept="image/*" id="icon-button-file" type="file" sx={{ display: 'none' }} onChange={imageChangeHandler} />
-                  <IconButton color="primary" aria-label="upload picture" component="span">
-                    <PhotoCamera />
-                    <FormattedMessage id='post.image' />
-                  </IconButton>
-                </label>
-              </Grid>
-
-              <Grid item xs={4}>
-                <img src={file} className={classes.imagePreview} />
-              </Grid>
+          <Grid container spacing={2} className={classes.image}>
+            <Grid item xs={6}>
+              <label htmlFor="icon-button-file">
+                <Input accept="image/*" id="icon-button-file" type="file" sx={{ display: 'none' }} onChange={imageChangeHandler} />
+                <IconButton color="primary" aria-label="upload picture" component="span">
+                  <PhotoCamera />
+                  <FormattedMessage id='post.image' />
+                </IconButton>
+              </label>
             </Grid>
 
-            <Button
-              type='submit'
-              variant='contained'
-              color='primary'
-              disabled={loading}
-              fullWidth
-              sx={{ marginTop: 2 }}
-            >
-              <FormattedMessage id={'btn.edit'} />
-            </Button>
-          </form>
-        </Paper>
+            <Grid item xs={4}>
+              <img src={file} className={classes.imagePreview} />
+            </Grid>
+          </Grid>
+
+          <Button
+            type='submit'
+            variant='contained'
+            color='primary'
+            disabled={loading}
+            fullWidth
+            sx={{ marginTop: 2 }}
+          >
+            <FormattedMessage id={'btn.edit'} />
+          </Button>
+        </form>
       </Container>
     </MainLayout>
   )

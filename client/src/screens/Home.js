@@ -37,7 +37,7 @@ export default function Home() {
             ? <Grid container spacing={2}>
               {
                 posts.map(p => (
-                  <Grid item xs={4} key={p.img}>
+                  <Grid item xs={12} md={6} lg={4}  key={p.img}>
                     <Post title={p.title} image={p.image} body={p.body} postId={p._id} />
                   </Grid>
                 ))

@@ -130,72 +130,73 @@ export default function EditPost(props) {
 
   return (
     <MainLayout loading={loading}>
-      <Container component="main" maxWidth='md'>
-        <Paper className={classes.paper}>
-          {
-            hasError && (
-              <Box marginTop={2}>
+      <Container component="main" maxWidth='sm' sx={{marginBottom: 4}}>
+        {
+          hasError && (
+            <Box marginTop={2}>
+              <Alert severity='error'>
+                <br />
+                {
+                  errors.map(e => (
+                    <li>
+                      {e}
+                    </li>
+                  ))
+                }
+              </Alert>
+            </Box>
+          )
+        }
 
-                <Alert severity='error'>
-                  <br />
-                  {
-                    errors.map(e => (
-                      <li>
-                        {e}
-                      </li>
-                    ))
-                  }
-                </Alert>
-              </Box>
-            )
-          }
+        <Card>
+          <CardHeader
+            title={title}
+          />
 
-          <Card>
-            <CardHeader
-              title={title}
+          <CardMedia
+            component='img'
+            src={file}
+            alt={title}
+            loading="lazy" 
+            height='420px'
             />
 
-            <CardMedia sx={{ marginY: 2, padding: 1 }}>
-              <img src={file} className={classes.image} />
-            </CardMedia>
+          <CardContent>
+            <Typography variant='h5'>
+              {body}
+            </Typography>
+          </CardContent>
 
-            <CardContent sx={{ marginY: 2, padding: 1 }}>
-              <Typography variant='h5'>
-                {body}
-              </Typography>
-            </CardContent>
+          <CardActions sx={{ justifyContent: 'center' }}>
+            {
+              Auth.auth() && Auth.getUser()._id == userId ? (
+                <div>
+                  <IconButton aria-label="add to shopping cart" onClick={() => props.history.push(editUrl)}>
+                    <Edit sx={{ color: pink[500] }} />
+                  </IconButton>
 
-            <CardActions sx={{justifyContent: 'center'}}>
+                  <IconButton aria-label="add to shopping cart" onClick={handleClickOpen}>
+                    <Delete sx={{ color: pink[500] }} />
+                  </IconButton>
+
+                  <AlertDialog
+                    title={formatMessage({ id: 'post.delete.title' })}
+                    body={formatMessage({ id: 'post.delete.body' })}
+                    open={open}
+                    handleAgree={handleDeleteClick}
+                    handleClose={handleClose}
+                  />
+                </div>
+              ) : ''
+            }
+            {numberOfLikes || 0}
+            <IconButton color="primary" aria-label="add to shopping cart" onClick={handleLikeClick}>
               {
-                Auth.auth() && Auth.getUser()._id == userId ? (
-                  <div>
-                    <IconButton aria-label="add to shopping cart" onClick= { () => props.history.push(editUrl)}>
-                        <Edit sx={{ color: pink[500] }} />
-                    </IconButton>
-
-                    <IconButton aria-label="add to shopping cart" onClick={handleClickOpen}>
-                        <Delete sx={{ color: pink[500] }}/>
-                    </IconButton>
-
-                    <AlertDialog
-                      title={formatMessage({ id: 'post.delete.title' })}
-                      body={formatMessage({ id: 'post.delete.body' })}
-                      open={open}
-                      handleAgree={handleDeleteClick}
-                      handleClose={handleClose}
-                    />
-                  </div>
-                ) : ''
+                liked ? <ThumbUp /> : <ThumbUpOutlined />
               }
-              {numberOfLikes || 0}
-              <IconButton color="primary" aria-label="add to shopping cart" onClick={handleLikeClick}>
-                {
-                  liked ? <ThumbUp /> : <ThumbUpOutlined />
-                }
-              </IconButton>
-            </CardActions>
-          </Card>
-        </Paper>
+            </IconButton>
+          </CardActions>
+        </Card>
       </Container>
     </MainLayout>
   )
